@@ -20,6 +20,7 @@ class App extends React.Component {
     super(props);
     this.state = {
         balance: 10000,
+        display: true,
         data: [
           {
             name:"Phoenixxxx",
@@ -57,6 +58,8 @@ class App extends React.Component {
         ] 
     }
     this.handleRefresh = this.handleRefresh.bind(this); 
+    this.handleShowBalance = this.handleShowBiz.bind(this);
+    
   }
 
   handleRefresh(valueChangeTicker){
@@ -79,43 +82,41 @@ class App extends React.Component {
     });
 
     this.setState({data: coinDisplay});
-    
-
-
+  
   }
+
+  handleShowBiz(showLog){
+
+    console.log({showLog})
+    if (this.state.display){
+      console.log("test display true turning to false")
+      this.setState({display: false});
+      
+      
+    } else {
+      console.log("test display false turning to true")
+      this.setState({display: true});
+    }
+
+    return this.props.displayState
+
+}
+
+
+
 
   render(){
     return (
       <AppStyle>
         <title><Greetings/></title>
         <Header/>
-        <AccountBalance currency="U$D" amount={this.state.balance} showBalance={true}/>
-        <CoinList data={this.state.data} handleRefresh={this.handleRefresh}/>
+        <AccountBalance currency="U$D" amount={this.state.balance} handleShowBalance={this.handleShowBalance} displayState={this.state.display} />
+        <CoinList data={this.state.data} handleRefresh={this.handleRefresh} displayState={this.state.display}/>
       </AppStyle>
     );
   }
 
-  handleShowBalance(showingBalance) {
-    const coinDisplay = this.state.data.map(({ticker,price,name,balance}) => {
-      let newPrice = price;
+}
 
-      if (showingBalance === ticker) {
-        const randomPercentage = 0.99515 + Math.random() * 0.01
-        newPrice = newPrice * randomPercentage;
-      }
-      
-      return {
-        name,
-        ticker,
-        balance,
-        price: newPrice
-      }
-
-      
-    });
-  
-    this.setState({data: coinDisplay});
-
-  }}
   
 export default App;

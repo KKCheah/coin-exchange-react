@@ -16,12 +16,23 @@ export default class Coin extends Component {
     }
 
     render() {
+
+        let privacyBalance = <>{this.props.balance}</>
+        let privacyPrice = <>{this.props.price}</>
+
+        if(this.props.displayState){
+            
+        } else {
+            privacyBalance = "******";
+            privacyPrice = "*****";
+        }
+
         return (
             <tr>
                 <Td>{this.props.name}</Td>
                 <Td>{this.props.ticker}</Td>
-                <Td>{this.props.balance}</Td>
-                <Td>$ {this.props.price}</Td>
+                <Td>{privacyBalance}</Td>
+                <Td>{privacyPrice}</Td>
                 <Td>
                     <form action="#" method="POST">  
                         <button onClick={this.handleClick}>Refresh</button>
@@ -31,6 +42,7 @@ export default class Coin extends Component {
         );
     }
 
+    
 
     handleClick(e) {
         // Prevent default action of submitting the form

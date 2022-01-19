@@ -10,29 +10,53 @@ const Section = styled.section`
 `;
 
 export default class AccountBalance extends Component {
+    constructor(props){
+        super(props);    
+        this.handleShowBalance = this.handleShowBalance.bind(this)
+    }
+    
     render() {
 
-        const buttonText = this.props.showBalance ? "Hide Balance" : "Show Balance"
-
+        const buttonText = this.props.displayState ? "Hide Balance" : "Show Balance"
+        let content = <>Balance: {this.props.currency}{this.props.amount}</>;
+        let nullContent = null
+        if (this.props.displayState) {
+            console.log("displayState true")
+        } else {
+            content = nullContent
+            console.log("displayState false")
+        }
         return (
             <Section>
-                <div className="account-balance">Balance: {this.props.currency} {this.props.amount}</div>
-                <button onClick={this.handleShow}>{buttonText}</button>
+                <div className="account-balance">{content}</div>
+                <button onClick={this.handleShowBalance}>{buttonText}</button>
             </Section>
         )
     }
 
 
-    handleShow(e){
+    handleShowBalance(e){
        e.preventDefault();
-       this.props.handleShowBalance(this.props.showBalance)
+       this.props.handleShowBalance(this.props.displayState);
+
+       }
     }
-}
 
 
 
 AccountBalance.propTypes = {
-    amount: PropTypes.number.isRequired,
-    currency: PropTypes.string.isRequired
+        amount: PropTypes.oneOfType([
+        PropTypes.string.isRequired,
+        PropTypes.number.isRequired
+    ]),
+
+    currency: PropTypes.oneOfType([
+        PropTypes.string.isRequired,
+        PropTypes.number.isRequired
+    ])
 }
+
+
+
+
 

@@ -32,9 +32,10 @@ export default class CoinList extends Component {
             </TableHeader>
           </thead>
           <tbody>
-            {
+            { 
               this.props.data.map(value=>(<Coin key = {value.ticker}
-              handleRefresh={this.props.handleRefresh} 
+              handleRefresh={this.props.handleRefresh}
+              displayState = {this.props.displayState} 
               name={value.name} 
               balance={value.balance} 
               ticker={value.ticker} 
